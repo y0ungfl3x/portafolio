@@ -150,6 +150,10 @@ html {
   mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
 }
 
+.hero-network {
+  mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+}
+
 .hero-glow {
   position: absolute;
   top: 15%;

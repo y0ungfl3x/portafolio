@@ -9,6 +9,7 @@ import {
 
 export const EMAIL = 'robertcardenas7777@gmail.com'
 export const GITHUB_URL = 'https://github.com/y0ungfl3x'
+export const CV_URL = '/cv-robert-cardenas.pdf'
 
 export type Project = {
   number: string
@@ -19,6 +20,7 @@ export type Project = {
   url?: string
   logo: string
   invertLogo?: boolean
+  screenshot: string
 }
 
 export const projects: Project[] = [
@@ -31,6 +33,7 @@ export const projects: Project[] = [
     type: 'SaaS · En producción',
     url: 'https://smartgyms.org',
     logo: '/SMARTGYM.png',
+    screenshot: '/cap-smart.png',
   },
   {
     number: '02',
@@ -42,6 +45,7 @@ export const projects: Project[] = [
     url: 'https://ncnaturalcosmetic.com',
     logo: '/nc.svg',
     invertLogo: true,
+    screenshot: '/cap-nc.png',
   },
   {
     number: '03',
@@ -52,6 +56,7 @@ export const projects: Project[] = [
     type: 'Software médico',
     url: 'https://odonto-core.vercel.app/',
     logo: '/odonto.png',
+    screenshot: '/cap-odonto.png',
   },
   {
     number: '04',
@@ -61,6 +66,7 @@ export const projects: Project[] = [
     tags: ['Next.js', 'Nest.js', 'Turborepo'],
     type: 'Próximamente',
     logo: '/k0score.png',
+    screenshot: '/cap-kscore.png',
   },
 ]
 

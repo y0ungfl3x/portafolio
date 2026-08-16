@@ -5,12 +5,14 @@ import Image from 'next/image'
 import {
   ArrowDown,
   ArrowUpRight,
+  Download,
   Mail,
-  MoveUpRight,
 } from 'lucide-react'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { TechIcon } from '@/components/tech-icons'
+import { HeroNetwork } from '@/components/hero-network'
 import {
+  CV_URL,
   EMAIL,
   GITHUB_URL,
   certifications,
@@ -109,6 +111,7 @@ export default function Home() {
         id="inicio"
         className="hero-grid relative mx-auto flex min-h-[calc(100vh-80px)] max-w-7xl flex-col justify-center px-6 pb-20 pt-16 md:px-10 lg:px-12"
       >
+        <HeroNetwork />
         <div className="hero-glow" aria-hidden="true" />
         <div className="relative z-10">
           <Reveal className="mb-10 flex items-center gap-3 font-mono text-xs text-muted-foreground">
@@ -134,7 +137,7 @@ export default function Home() {
               <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
             </a>
           </Reveal>
-          <Reveal delay={300} className="mt-16 flex items-center gap-3">
+          <Reveal delay={300} className="mt-16 flex flex-wrap items-center gap-3">
             <a
               href={GITHUB_URL}
               target="_blank"
@@ -150,6 +153,14 @@ export default function Home() {
             >
               <Mail className="size-4" />
               Email
+            </a>
+            <a
+              href={CV_URL}
+              download
+              className="group inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 font-mono text-xs text-background transition-colors hover:bg-foreground/80"
+            >
+              <Download className="size-4 transition-transform group-hover:translate-y-0.5" />
+              Descargar CV
             </a>
           </Reveal>
         </div>
@@ -317,69 +328,82 @@ export default function Home() {
               2022 — 2025
             </span>
           </div>
-          <div>
-            {projects.map((project, index) => (
-              <Reveal key={project.number} delay={index * 100}>
-                <article className="group grid gap-5 border-b border-border py-8 transition-colors hover:bg-card/60 md:grid-cols-[64px_1fr_auto] md:items-start md:gap-8 md:py-10">
-                  <div className="flex flex-row items-start gap-3 md:flex-col">
-                    <span className="font-mono text-xs text-muted-foreground">{project.number}</span>
-                    <span className="relative flex size-12 items-center justify-center overflow-hidden rounded-lg border border-border bg-background p-1.5">
-                      <Image
-                        src={project.logo}
-                        alt={`Logo de ${project.title}`}
-                        fill
-                        sizes="48px"
-                        className={`object-contain ${project.invertLogo ? 'dark:invert' : ''}`}
-                      />
-                    </span>
-                  </div>
-                  <div>
-                    <div className="mb-3 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                      {project.type}
-                    </div>
-                    <h2 className="text-2xl font-medium tracking-tight md:text-3xl">{project.title}</h2>
-                    <p className="mt-3 max-w-xl leading-relaxed text-muted-foreground">
-                      {project.description}
-                    </p>
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="border border-border px-2 py-1 font-mono text-[10px] uppercase tracking-wide text-muted-foreground"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    {project.url && (
-                      <a
-                        href={project.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-5 inline-flex items-center gap-2 font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
-                      >
-                        Visitar sitio
-                        <ArrowUpRight className="size-3.5" />
-                      </a>
-                    )}
-                  </div>
-                  <div className="hidden md:block">
+          <div className="space-y-20">
+            {projects.map((project, index) => {
+              const reverse = index % 2 === 1
+              const screenshot = (
+                <Image
+                  src={project.screenshot}
+                  alt={`Captura de ${project.title}`}
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover object-top grayscale transition-[filter] duration-500 ease-out group-hover:grayscale-0"
+                />
+              )
+              const frameClass = `relative block aspect-[16/9] overflow-hidden border border-border ${reverse ? 'md:order-2' : ''}`
+              return (
+                <Reveal key={project.number} delay={index * 100}>
+                  <article className="group grid gap-8 md:grid-cols-2 md:items-center md:gap-12">
                     {project.url ? (
                       <a
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`Ir a ${project.title}`}
+                        aria-label={`Ver ${project.title}`}
+                        className={frameClass}
                       >
-                        <MoveUpRight className="size-5 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                        {screenshot}
                       </a>
                     ) : (
-                      <MoveUpRight className="size-5 text-muted-foreground/40" />
+                      <div className={frameClass}>{screenshot}</div>
                     )}
-                  </div>
-                </article>
-              </Reveal>
-            ))}
+                    <div>
+                      <div className="mb-4 flex items-center gap-3 font-mono text-xs text-muted-foreground">
+                        <span>{project.number}</span>
+                        <span className="h-px w-8 bg-border" />
+                        <span className="text-[10px] uppercase tracking-wider">{project.type}</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="relative flex size-9 items-center justify-center overflow-hidden rounded-lg border border-border bg-background p-1">
+                          <Image
+                            src={project.logo}
+                            alt={`Logo de ${project.title}`}
+                            fill
+                            sizes="36px"
+                            className={`object-contain ${project.invertLogo ? 'dark:invert' : ''}`}
+                          />
+                        </span>
+                        <h2 className="text-3xl font-medium tracking-tight md:text-4xl">{project.title}</h2>
+                      </div>
+                      <p className="mt-4 max-w-xl leading-relaxed text-muted-foreground">
+                        {project.description}
+                      </p>
+                      <div className="mt-6 flex flex-wrap gap-2">
+                        {project.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="border border-border px-2 py-1 font-mono text-[10px] uppercase tracking-wide text-muted-foreground"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      {project.url && (
+                        <a
+                          href={project.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group/link mt-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-foreground transition-opacity hover:opacity-60"
+                        >
+                          Visitar sitio
+                          <ArrowUpRight className="size-4 transition-transform group-hover/link:translate-x-1 group-hover/link:-translate-y-1" />
+                        </a>
+                      )}
+                    </div>
+                  </article>
+                </Reveal>
+              )
+            })}
           </div>
         </div>
       </section>
