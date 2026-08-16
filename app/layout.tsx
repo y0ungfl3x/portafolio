@@ -3,25 +3,11 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Robert Cárdenas — Ingeniero de Software',
-  description: 'Portafolio de Robert Cárdenas, ingeniero de software enfocado en crear productos digitales claros, rápidos y confiables.',
-  generator: 'v0.app',
+  title: 'Robert Cardenas — Ingeniero de Software & Full-stack',
+  description:
+    'Portafolio de Robert Cardenas, ingeniero de software y desarrollador full-stack. Fundador de SmartGym y creador de productos digitales de punta a punta.',
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: '/icon.svg',
   },
 }
 
@@ -33,13 +19,18 @@ export const viewport: Viewport = {
   ],
 }
 
+const themeScript = `(function(){try{var t=localStorage.getItem('theme');var d=t?t==='dark':true;document.documentElement.classList.toggle('dark',d);}catch(e){document.documentElement.classList.add('dark');}})();`
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es" className="bg-background">
+    <html lang="es" className="bg-background" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
