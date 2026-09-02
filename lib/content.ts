@@ -32,7 +32,7 @@ export const projects: Project[] = [
     tags: ['Laravel', 'MySQL', 'Reconocimiento facial'],
     type: 'SaaS · En producción',
     url: 'https://smartgyms.org',
-    logo: '/SMARTGYM.png',
+    logo: 'https://github.com/user-attachments/assets/b1f1b48f-3fda-4943-a087-0059ce8a986d',
   },
   {
     number: '02',
