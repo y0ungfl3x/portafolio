@@ -20,7 +20,7 @@ export type Project = {
   url?: string
   logo: string
   invertLogo?: boolean
-  screenshot: string
+  screenshot?: string
 }
 
 export const projects: Project[] = [
@@ -33,7 +33,6 @@ export const projects: Project[] = [
     type: 'SaaS · En producción',
     url: 'https://smartgyms.org',
     logo: '/SMARTGYM.png',
-    screenshot: '/cap-smart.png',
   },
   {
     number: '02',
@@ -45,7 +44,6 @@ export const projects: Project[] = [
     url: 'https://ncnaturalcosmetic.com',
     logo: '/nc.svg',
     invertLogo: true,
-    screenshot: '/cap-nc.png',
   },
   {
     number: '03',
@@ -56,7 +54,6 @@ export const projects: Project[] = [
     type: 'Software médico',
     url: 'https://odonto-core.vercel.app/',
     logo: '/odonto.png',
-    screenshot: '/cap-odonto.png',
   },
   {
     number: '04',
@@ -67,7 +64,6 @@ export const projects: Project[] = [
     type: 'Próximamente',
     url: 'https://k-score.com',
     logo: '/k0score.png',
-    screenshot: '/cap-kscore.png',
   },
 ]
 

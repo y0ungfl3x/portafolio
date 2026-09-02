@@ -60,9 +60,14 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   )
 }
 
+function getProjectPreviewUrl(url: string) {
+  return `https://image.thum.io/get/width/1200/noanimate/${encodeURIComponent(url)}`
+}
+
 export default function Home() {
   const [showTop, setShowTop] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const [failedPreviews, setFailedPreviews] = useState<Record<string, boolean>>({})
 
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 700)
@@ -331,14 +336,41 @@ export default function Home() {
           <div className="space-y-20">
             {projects.map((project, index) => {
               const reverse = index % 2 === 1
+              const previewSrc = project.screenshot ?? (project.url ? getProjectPreviewUrl(project.url) : undefined)
+              const canRenderPreview = Boolean(previewSrc) && !failedPreviews[project.number]
               const screenshot = (
-                <Image
-                  src={project.screenshot}
-                  alt={`Captura de ${project.title}`}
-                  fill
-                  sizes="(min-width: 768px) 50vw, 100vw"
-                  className="object-cover object-top grayscale transition-[filter] duration-500 ease-out group-hover:grayscale-0"
-                />
+                canRenderPreview && previewSrc ? (
+                  <Image
+                    src={previewSrc}
+                    alt={`Vista previa de ${project.title}`}
+                    fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="object-cover object-top grayscale transition-[filter] duration-500 ease-out group-hover:grayscale-0"
+                    onError={() =>
+                      setFailedPreviews((prev) =>
+                        prev[project.number] ? prev : { ...prev, [project.number]: true },
+                      )
+                    }
+                  />
+                ) : (
+                  <div className="flex h-full w-full flex-col items-center justify-center gap-4 bg-card p-6 text-center">
+                    <span className="relative flex size-14 items-center justify-center overflow-hidden rounded-xl border border-border bg-background p-2">
+                      <Image
+                        src={project.logo}
+                        alt={`Logo de ${project.title}`}
+                        fill
+                        sizes="56px"
+                        className={`object-contain ${project.invertLogo ? 'dark:invert' : ''}`}
+                      />
+                    </span>
+                    <div>
+                      <p className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                        Vista previa no disponible
+                      </p>
+                      <p className="mt-1 text-sm font-medium text-foreground">{project.title}</p>
+                    </div>
+                  </div>
+                )
               )
               const frameClass = `relative block aspect-[16/9] overflow-hidden border border-border ${reverse ? 'md:order-2' : ''}`
               return (
