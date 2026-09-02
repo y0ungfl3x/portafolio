@@ -65,6 +65,7 @@ export const projects: Project[] = [
       'Sistema completo para competencias de karate: preinscripciones y toda la lógica de gestión de la competencia.',
     tags: ['Next.js', 'Nest.js', 'Turborepo'],
     type: 'Próximamente',
+    url: 'https://k-score.com',
     logo: '/k0score.png',
     screenshot: '/cap-kscore.png',
   },
