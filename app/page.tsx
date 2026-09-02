@@ -61,7 +61,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 }
 
 function getProjectPreviewUrl(url: string) {
-  return `https://image.thum.io/get/width/1200/noanimate/${encodeURIComponent(url)}`
+  return `https://image.thum.io/get/width/1200/noanimate/${url}`
 }
 
 export default function Home() {
