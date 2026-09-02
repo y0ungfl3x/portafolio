@@ -6,6 +6,16 @@ const nextConfig = {
   images: {
     unoptimized: true,
     dangerouslyAllowSVG: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'image.thum.io',
+      },
+      {
+        protocol: 'https',
+        hostname: 'github.com',
+      },
+    ],
   },
 }
 
